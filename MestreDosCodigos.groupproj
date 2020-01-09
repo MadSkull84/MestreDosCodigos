@@ -1,0 +1,168 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{99B39E7B-1CA8-4C50-A077-0518E461CC8D}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="01 - Fatorial\Fatorial.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="02 - Merge Sort\Merge_Sort.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="03 - Vendas\Vendas.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="04 - Caixa-mista\Caixa_mista.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="05 - Palindromo\Palindromo.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="06 - Calculos Geometricos\CalcGeometricos_dll.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="06 - Calculos Geometricos\CalcGeometricos.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="07 - Extenso\Extenso_dll.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="07 - Extenso\Extenso.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="08 - Pilha\Pilha.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="09 - CacheFuncionario\CacheFuncionario.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="10 - OpeMatematica\OpeMatematica.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="Fatorial">
+        <MSBuild Projects="01 - Fatorial\Fatorial.dproj"/>
+    </Target>
+    <Target Name="Fatorial:Clean">
+        <MSBuild Projects="01 - Fatorial\Fatorial.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Fatorial:Make">
+        <MSBuild Projects="01 - Fatorial\Fatorial.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Merge_Sort">
+        <MSBuild Projects="02 - Merge Sort\Merge_Sort.dproj"/>
+    </Target>
+    <Target Name="Merge_Sort:Clean">
+        <MSBuild Projects="02 - Merge Sort\Merge_Sort.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Merge_Sort:Make">
+        <MSBuild Projects="02 - Merge Sort\Merge_Sort.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Vendas">
+        <MSBuild Projects="03 - Vendas\Vendas.dproj"/>
+    </Target>
+    <Target Name="Vendas:Clean">
+        <MSBuild Projects="03 - Vendas\Vendas.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Vendas:Make">
+        <MSBuild Projects="03 - Vendas\Vendas.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Caixa_mista">
+        <MSBuild Projects="04 - Caixa-mista\Caixa_mista.dproj"/>
+    </Target>
+    <Target Name="Caixa_mista:Clean">
+        <MSBuild Projects="04 - Caixa-mista\Caixa_mista.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Caixa_mista:Make">
+        <MSBuild Projects="04 - Caixa-mista\Caixa_mista.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Palindromo">
+        <MSBuild Projects="05 - Palindromo\Palindromo.dproj"/>
+    </Target>
+    <Target Name="Palindromo:Clean">
+        <MSBuild Projects="05 - Palindromo\Palindromo.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Palindromo:Make">
+        <MSBuild Projects="05 - Palindromo\Palindromo.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="CalcGeometricos_dll">
+        <MSBuild Projects="06 - Calculos Geometricos\CalcGeometricos_dll.dproj"/>
+    </Target>
+    <Target Name="CalcGeometricos_dll:Clean">
+        <MSBuild Projects="06 - Calculos Geometricos\CalcGeometricos_dll.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="CalcGeometricos_dll:Make">
+        <MSBuild Projects="06 - Calculos Geometricos\CalcGeometricos_dll.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="CalcGeometricos">
+        <MSBuild Projects="06 - Calculos Geometricos\CalcGeometricos.dproj"/>
+    </Target>
+    <Target Name="CalcGeometricos:Clean">
+        <MSBuild Projects="06 - Calculos Geometricos\CalcGeometricos.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="CalcGeometricos:Make">
+        <MSBuild Projects="06 - Calculos Geometricos\CalcGeometricos.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Extenso_dll">
+        <MSBuild Projects="07 - Extenso\Extenso_dll.dproj"/>
+    </Target>
+    <Target Name="Extenso_dll:Clean">
+        <MSBuild Projects="07 - Extenso\Extenso_dll.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Extenso_dll:Make">
+        <MSBuild Projects="07 - Extenso\Extenso_dll.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Extenso">
+        <MSBuild Projects="07 - Extenso\Extenso.dproj"/>
+    </Target>
+    <Target Name="Extenso:Clean">
+        <MSBuild Projects="07 - Extenso\Extenso.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Extenso:Make">
+        <MSBuild Projects="07 - Extenso\Extenso.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Pilha">
+        <MSBuild Projects="08 - Pilha\Pilha.dproj"/>
+    </Target>
+    <Target Name="Pilha:Clean">
+        <MSBuild Projects="08 - Pilha\Pilha.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Pilha:Make">
+        <MSBuild Projects="08 - Pilha\Pilha.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="CacheFuncionario">
+        <MSBuild Projects="09 - CacheFuncionario\CacheFuncionario.dproj"/>
+    </Target>
+    <Target Name="CacheFuncionario:Clean">
+        <MSBuild Projects="09 - CacheFuncionario\CacheFuncionario.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="CacheFuncionario:Make">
+        <MSBuild Projects="09 - CacheFuncionario\CacheFuncionario.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="OpeMatematica">
+        <MSBuild Projects="10 - OpeMatematica\OpeMatematica.dproj"/>
+    </Target>
+    <Target Name="OpeMatematica:Clean">
+        <MSBuild Projects="10 - OpeMatematica\OpeMatematica.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="OpeMatematica:Make">
+        <MSBuild Projects="10 - OpeMatematica\OpeMatematica.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="Fatorial;Merge_Sort;Vendas;Caixa_mista;Palindromo;CalcGeometricos_dll;CalcGeometricos;Extenso_dll;Extenso;Pilha;CacheFuncionario;OpeMatematica"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="Fatorial:Clean;Merge_Sort:Clean;Vendas:Clean;Caixa_mista:Clean;Palindromo:Clean;CalcGeometricos_dll:Clean;CalcGeometricos:Clean;Extenso_dll:Clean;Extenso:Clean;Pilha:Clean;CacheFuncionario:Clean;OpeMatematica:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="Fatorial:Make;Merge_Sort:Make;Vendas:Make;Caixa_mista:Make;Palindromo:Make;CalcGeometricos_dll:Make;CalcGeometricos:Make;Extenso_dll:Make;Extenso:Make;Pilha:Make;CacheFuncionario:Make;OpeMatematica:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
