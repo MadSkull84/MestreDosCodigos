@@ -39,6 +39,9 @@
         <Projects Include="10 - OpeMatematica\OpeMatematica.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="11 - Record Helper\RecHelper.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -155,14 +158,23 @@
     <Target Name="OpeMatematica:Make">
         <MSBuild Projects="10 - OpeMatematica\OpeMatematica.dproj" Targets="Make"/>
     </Target>
+    <Target Name="RecHelper">
+        <MSBuild Projects="11 - Record Helper\RecHelper.dproj"/>
+    </Target>
+    <Target Name="RecHelper:Clean">
+        <MSBuild Projects="11 - Record Helper\RecHelper.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="RecHelper:Make">
+        <MSBuild Projects="11 - Record Helper\RecHelper.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="Fatorial;Merge_Sort;Vendas;Caixa_mista;Palindromo;CalcGeometricos_dll;CalcGeometricos;Extenso_dll;Extenso;Pilha;CacheFuncionario;OpeMatematica"/>
+        <CallTarget Targets="Fatorial;Merge_Sort;Vendas;Caixa_mista;Palindromo;CalcGeometricos_dll;CalcGeometricos;Extenso_dll;Extenso;Pilha;CacheFuncionario;OpeMatematica;RecHelper"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="Fatorial:Clean;Merge_Sort:Clean;Vendas:Clean;Caixa_mista:Clean;Palindromo:Clean;CalcGeometricos_dll:Clean;CalcGeometricos:Clean;Extenso_dll:Clean;Extenso:Clean;Pilha:Clean;CacheFuncionario:Clean;OpeMatematica:Clean"/>
+        <CallTarget Targets="Fatorial:Clean;Merge_Sort:Clean;Vendas:Clean;Caixa_mista:Clean;Palindromo:Clean;CalcGeometricos_dll:Clean;CalcGeometricos:Clean;Extenso_dll:Clean;Extenso:Clean;Pilha:Clean;CacheFuncionario:Clean;OpeMatematica:Clean;RecHelper:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="Fatorial:Make;Merge_Sort:Make;Vendas:Make;Caixa_mista:Make;Palindromo:Make;CalcGeometricos_dll:Make;CalcGeometricos:Make;Extenso_dll:Make;Extenso:Make;Pilha:Make;CacheFuncionario:Make;OpeMatematica:Make"/>
+        <CallTarget Targets="Fatorial:Make;Merge_Sort:Make;Vendas:Make;Caixa_mista:Make;Palindromo:Make;CalcGeometricos_dll:Make;CalcGeometricos:Make;Extenso_dll:Make;Extenso:Make;Pilha:Make;CacheFuncionario:Make;OpeMatematica:Make;RecHelper:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
