@@ -25,6 +25,8 @@ var
   oStringListHelper: TStringList;
 
 begin
+  ReportMemoryLeaksOnShutdown := True;
+
   oStringListHelper := TStringList.Create;
   try
     oStringListHelper.Add('Nome=Eder');

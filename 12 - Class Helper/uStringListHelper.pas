@@ -80,8 +80,6 @@ var
 begin
   if FormatoValidoParaJSON then
   begin
-    result := 'Oi eu sou um JSON';
-
     oJSON := TJSONObject.Create;
     try
       for nPosicao := ZeroValue to Pred(Self.Count) do
