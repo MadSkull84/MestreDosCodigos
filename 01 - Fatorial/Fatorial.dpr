@@ -43,10 +43,9 @@ begin
   try
     oFatorial := TFatorial.Create;
     nFatorial := oFatorial.FatorialDe(nValor);
-  finally
     writeln(Format('Fatorial de "%0d" é %0.0f',[nValor,nFatorial]));
     readln;
-
+  finally
     FreeAndNil(oFatorial);
   end;
 end.
