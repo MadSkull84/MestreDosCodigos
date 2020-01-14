@@ -48,6 +48,9 @@
         <Projects Include="13 - InterfaceLEArquivo\InterfaceLEArquivo.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="14 - Diagrama\Diagrama.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -191,14 +194,23 @@
     <Target Name="InterfaceLEArquivo:Make">
         <MSBuild Projects="13 - InterfaceLEArquivo\InterfaceLEArquivo.dproj" Targets="Make"/>
     </Target>
+    <Target Name="Diagrama">
+        <MSBuild Projects="14 - Diagrama\Diagrama.dproj"/>
+    </Target>
+    <Target Name="Diagrama:Clean">
+        <MSBuild Projects="14 - Diagrama\Diagrama.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Diagrama:Make">
+        <MSBuild Projects="14 - Diagrama\Diagrama.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="Fatorial;Merge_Sort;Vendas;Caixa_mista;Palindromo;CalcGeometricos_dll;CalcGeometricos;Extenso_dll;Extenso;Pilha;CacheFuncionario;OpeMatematica;RecHelper;Class_Helper;InterfaceLEArquivo"/>
+        <CallTarget Targets="Fatorial;Merge_Sort;Vendas;Caixa_mista;Palindromo;CalcGeometricos_dll;CalcGeometricos;Extenso_dll;Extenso;Pilha;CacheFuncionario;OpeMatematica;RecHelper;Class_Helper;InterfaceLEArquivo;Diagrama"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="Fatorial:Clean;Merge_Sort:Clean;Vendas:Clean;Caixa_mista:Clean;Palindromo:Clean;CalcGeometricos_dll:Clean;CalcGeometricos:Clean;Extenso_dll:Clean;Extenso:Clean;Pilha:Clean;CacheFuncionario:Clean;OpeMatematica:Clean;RecHelper:Clean;Class_Helper:Clean;InterfaceLEArquivo:Clean"/>
+        <CallTarget Targets="Fatorial:Clean;Merge_Sort:Clean;Vendas:Clean;Caixa_mista:Clean;Palindromo:Clean;CalcGeometricos_dll:Clean;CalcGeometricos:Clean;Extenso_dll:Clean;Extenso:Clean;Pilha:Clean;CacheFuncionario:Clean;OpeMatematica:Clean;RecHelper:Clean;Class_Helper:Clean;InterfaceLEArquivo:Clean;Diagrama:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="Fatorial:Make;Merge_Sort:Make;Vendas:Make;Caixa_mista:Make;Palindromo:Make;CalcGeometricos_dll:Make;CalcGeometricos:Make;Extenso_dll:Make;Extenso:Make;Pilha:Make;CacheFuncionario:Make;OpeMatematica:Make;RecHelper:Make;Class_Helper:Make;InterfaceLEArquivo:Make"/>
+        <CallTarget Targets="Fatorial:Make;Merge_Sort:Make;Vendas:Make;Caixa_mista:Make;Palindromo:Make;CalcGeometricos_dll:Make;CalcGeometricos:Make;Extenso_dll:Make;Extenso:Make;Pilha:Make;CacheFuncionario:Make;OpeMatematica:Make;RecHelper:Make;Class_Helper:Make;InterfaceLEArquivo:Make;Diagrama:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
