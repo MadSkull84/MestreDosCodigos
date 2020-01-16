@@ -60,6 +60,9 @@
         <Projects Include="18 - CriarJSON\CriarJSON.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="17 - GitHub_JSON\GitHubJSON.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -239,14 +242,23 @@
     <Target Name="CriarJSON:Make">
         <MSBuild Projects="18 - CriarJSON\CriarJSON.dproj" Targets="Make"/>
     </Target>
+    <Target Name="GitHubJSON">
+        <MSBuild Projects="17 - GitHub_JSON\GitHubJSON.dproj"/>
+    </Target>
+    <Target Name="GitHubJSON:Clean">
+        <MSBuild Projects="17 - GitHub_JSON\GitHubJSON.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="GitHubJSON:Make">
+        <MSBuild Projects="17 - GitHub_JSON\GitHubJSON.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="Fatorial;Merge_Sort;Vendas;Caixa_mista;Palindromo;CalcGeometricos_dll;CalcGeometricos;Extenso_dll;Extenso;Pilha;CacheFuncionario;OpeMatematica;RecHelper;Class_Helper;InterfaceLEArquivo;Diagrama;MeuNotepad;ListaDadosClasse;CriarJSON"/>
+        <CallTarget Targets="Fatorial;Merge_Sort;Vendas;Caixa_mista;Palindromo;CalcGeometricos_dll;CalcGeometricos;Extenso_dll;Extenso;Pilha;CacheFuncionario;OpeMatematica;RecHelper;Class_Helper;InterfaceLEArquivo;Diagrama;MeuNotepad;ListaDadosClasse;CriarJSON;GitHubJSON"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="Fatorial:Clean;Merge_Sort:Clean;Vendas:Clean;Caixa_mista:Clean;Palindromo:Clean;CalcGeometricos_dll:Clean;CalcGeometricos:Clean;Extenso_dll:Clean;Extenso:Clean;Pilha:Clean;CacheFuncionario:Clean;OpeMatematica:Clean;RecHelper:Clean;Class_Helper:Clean;InterfaceLEArquivo:Clean;Diagrama:Clean;MeuNotepad:Clean;ListaDadosClasse:Clean;CriarJSON:Clean"/>
+        <CallTarget Targets="Fatorial:Clean;Merge_Sort:Clean;Vendas:Clean;Caixa_mista:Clean;Palindromo:Clean;CalcGeometricos_dll:Clean;CalcGeometricos:Clean;Extenso_dll:Clean;Extenso:Clean;Pilha:Clean;CacheFuncionario:Clean;OpeMatematica:Clean;RecHelper:Clean;Class_Helper:Clean;InterfaceLEArquivo:Clean;Diagrama:Clean;MeuNotepad:Clean;ListaDadosClasse:Clean;CriarJSON:Clean;GitHubJSON:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="Fatorial:Make;Merge_Sort:Make;Vendas:Make;Caixa_mista:Make;Palindromo:Make;CalcGeometricos_dll:Make;CalcGeometricos:Make;Extenso_dll:Make;Extenso:Make;Pilha:Make;CacheFuncionario:Make;OpeMatematica:Make;RecHelper:Make;Class_Helper:Make;InterfaceLEArquivo:Make;Diagrama:Make;MeuNotepad:Make;ListaDadosClasse:Make;CriarJSON:Make"/>
+        <CallTarget Targets="Fatorial:Make;Merge_Sort:Make;Vendas:Make;Caixa_mista:Make;Palindromo:Make;CalcGeometricos_dll:Make;CalcGeometricos:Make;Extenso_dll:Make;Extenso:Make;Pilha:Make;CacheFuncionario:Make;OpeMatematica:Make;RecHelper:Make;Class_Helper:Make;InterfaceLEArquivo:Make;Diagrama:Make;MeuNotepad:Make;ListaDadosClasse:Make;CriarJSON:Make;GitHubJSON:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
