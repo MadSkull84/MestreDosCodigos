@@ -2,13 +2,14 @@ program ListaDadosClasse;
 
 uses
   Vcl.Forms,
-  uTelaPrincipal in 'uTelaPrincipal.pas' {Form1};
+  uTelaPrincipal in 'uTelaPrincipal.pas' {frmTelaPrincipal},
+  uListaPropMet in 'uListaPropMet.pas';
 
 {$R *.res}
 
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TfrmTelaPrincipal, frmTelaPrincipal);
   Application.Run;
 end.

@@ -1,3 +1,11 @@
+{
+16 - Construa uma aplicação VCL. Esta aplicação deverá conter uma classe que,
+     utilizando RTTI, faça a listagem das propriedades e métodos de qualquer
+     classe passada por parâmetro. A apresentação da listagem fica por sua conta.
+
+Autor: Eder Correia Lira
+}
+
 unit uTelaPrincipal;
 
 interface
@@ -7,12 +15,15 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
 
 type
-  TForm1 = class(TForm)
-    Edit1: TEdit;
-    Button1: TButton;
+  TfrmTelaPrincipal = class(TForm)
+    edtClasse: TEdit;
+    btnListar: TButton;
     Memo1: TMemo;
     Memo2: TMemo;
-    procedure Button1Click(Sender: TObject);
+    lblClasse: TLabel;
+    Label1: TLabel;
+    Label2: TLabel;
+    procedure btnListarClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -20,40 +31,29 @@ type
   end;
 
 var
-  Form1: TForm1;
+  frmTelaPrincipal: TfrmTelaPrincipal;
 
 implementation
 
-uses System.RTTI;
+uses
+  uListaPropMet;
 
 {$R *.dfm}
 
-procedure TForm1.Button1Click(Sender: TObject);
+procedure TfrmTelaPrincipal.btnListarClick(Sender: TObject);
 var
-  RttiContext: TRttiContext;
-  RttiInstanceType: TRttiType;
-  RttiProperty: TRttiProperty;
-  RttiMethod: TRttiMethod;
-  cClass: TClass;
+  oListaPropMet: TListaPropMet;
 begin
-  RttiContext := TRttiContext.Create;
-  RttiInstanceType := RttiContext.GetType(TEdit);
+  oListaPropMet := TListaPropMet.Create(edtClasse.Text);
   try
     Memo1.Clear;
-    for RttiProperty in RttiInstanceType.GetProperties do
-    begin
-      Memo1.Lines.Add(RttiProperty.Name);
-    end;
+    Memo1.Lines.Text := oListaPropMet.ListaPropriedades.Text;
 
     Memo2.Clear;
-    for RttiMethod in RttiInstanceType.GetMethods do
-    begin
-      Memo2.Lines.Add(RttiMethod.Name);
-    end;
+    Memo2.Lines.Text := oListaPropMet.ListaMetodos.Text;
   finally
-    RttiContext.Free;
+    FreeAndNil(oListaPropMet);
   end;
-
 end;
 
 end.
