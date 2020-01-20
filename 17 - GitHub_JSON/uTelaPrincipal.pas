@@ -1,72 +1,96 @@
+{
+17 - A partir de uma sentença digitada pelo usuário, execute a pesquisa na API
+     do GitHub (https://api.github.com/search/repositories?q="busca"),
+     substituindo o texto "busca" pela entrada do usuário.
+     Carregue a resposta da API em um objeto com os seguintes
+     campos: id, name, html_url e description.
+     Por fim, liste todas as ocorrências encontradas para o usuário.
+     A aplicação pode ser console ou VCL.
+
+Autor: Eder Correia Lira
+}
+
 unit uTelaPrincipal;
 
 interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, REST.JSON, REST.Client, REST.Types, uRepositorio;
 
 type
-  TForm2 = class(TForm)
-    Button1: TButton;
-    Memo1: TMemo;
-    procedure Button1Click(Sender: TObject);
+  TfrmTelaPrincipal = class(TForm)
+    btnFiltrar: TButton;
+    memResultado: TMemo;
+    edtFiltro: TEdit;
+    lbFiltro: TLabel;
+    lblResultado: TLabel;
+    procedure btnFiltrarClick(Sender: TObject);
   private
+    FRESTClient: TRESTClient;
+    FRESTRequest: TRESTRequest;
+    FRESTResponse: TRESTResponse;
+    FRepositorios: TRepositorios;
+    procedure InicializarObjetos(var oRESTClient: TRESTClient; var oRESTResponse: TRESTResponse; var oRESTRequest: TRESTRequest);
+    procedure FinalizarObjetos;
     { Private declarations }
   public
     { Public declarations }
   end;
 
 var
-  Form2: TForm2;
+  frmTelaPrincipal: TfrmTelaPrincipal;
 
 implementation
 
-uses
-  REST.JSON, REST.Client, REST.Types, uRepositorio;
-
 {$R *.dfm}
 
-procedure TForm2.Button1Click(Sender: TObject);
+procedure TfrmTelaPrincipal.btnFiltrarClick(Sender: TObject);
 var
-  oRESTClient: TRESTClient;
-  oRESTRequest: TRESTRequest;
-  oRESTResponse: TRESTResponse;
-  oRepositorios: TRepositorios;
   oRepositorio: TRepositorio;
 begin
-  oRESTClient := TRESTClient.Create(EmptyStr);
-  oRESTClient.BaseURL := 'https://api.github.com';
+  InicializarObjetos(FRESTClient, FRESTResponse, FRESTRequest);
+  try
+    fRESTRequest.ResourceSuffix := 'repositories?q=' + edtFiltro.Text;
+    FRESTRequest.Execute;
 
-  oRESTResponse := TRESTResponse.Create(nil);
+    FRepositorios := TJSON.JsonToObject<TRepositorios>(FRESTResponse.JSONValue.ToJSON);
 
-  oRESTRequest := TRESTRequest.Create(nil);
-  oRESTRequest.Client := oRESTClient;
-  oRESTRequest.Response := oRESTResponse;
-  oRESTRequest.Method := rmGET;
-  oRESTRequest.Resource := 'search';
-  oRESTRequest.ResourceSuffix := 'repositories?q=mestre';
-
-  oRESTRequest.Execute;
-
-  oRepositorios := TJSON.JsonToObject<TRepositorios>(oRESTResponse.JSONValue.ToJSON);
-
-  Memo1.Clear;
-
-  for oRepositorio in oRepositorios.Repositorios do
-  begin
-    Memo1.Lines.Add(oRepositorio.Id.ToString);
-    Memo1.Lines.Add(oRepositorio.Name);
-    Memo1.Lines.Add(oRepositorio.Url);
-    Memo1.Lines.Add(oRepositorio.Description);
-    Memo1.Lines.Add(EmptyStr);
-    Memo1.Lines.Add(EmptyStr);
+    memResultado.Clear;
+    for oRepositorio in FRepositorios.Repositorios do
+    begin
+      memResultado.Lines.Add(oRepositorio.Id.ToString);
+      memResultado.Lines.Add(oRepositorio.Name);
+      memResultado.Lines.Add(oRepositorio.Html_Url);
+      memResultado.Lines.Add(oRepositorio.Description);
+      memResultado.Lines.Add(EmptyStr);
+      memResultado.Lines.Add(EmptyStr);
+    end;
+  finally
+    FinalizarObjetos;
   end;
+end;
 
-  FreeAndNil(oRepositorios);
-  FreeAndNil(oRESTRequest);
-  FreeAndNil(oRESTResponse);
-  FreeAndNil(oRESTClient);
+procedure TfrmTelaPrincipal.InicializarObjetos;
+begin
+  FRESTClient := TRESTClient.Create(EmptyStr);
+  FRESTClient.BaseURL := 'https://api.github.com';
+
+  FRESTResponse := TRESTResponse.Create(nil);
+
+  FRESTRequest := TRESTRequest.Create(nil);
+  FRESTRequest.Client := oRESTClient;
+  FRESTRequest.Response := oRESTResponse;
+  FRESTRequest.Method := rmGET;
+  FRESTRequest.Resource := 'search';
+end;
+
+procedure TfrmTelaPrincipal.FinalizarObjetos;
+begin
+  FreeAndNil(FRepositorios);
+  FreeAndNil(FRESTRequest);
+  FreeAndNil(FRESTResponse);
+  FreeAndNil(FRESTClient);
 end;
 
 end.

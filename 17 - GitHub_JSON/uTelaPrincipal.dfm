@@ -1,9 +1,9 @@
-object Form2: TForm2
+object frmTelaPrincipal: TfrmTelaPrincipal
   Left = 0
   Top = 0
-  Caption = 'Form2'
+  Caption = 'Consultar GutHub'
   ClientHeight = 300
-  ClientWidth = 635
+  ClientWidth = 428
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,22 +13,41 @@ object Form2: TForm2
   OldCreateOrder = False
   PixelsPerInch = 96
   TextHeight = 13
-  object Button1: TButton
-    Left = 8
+  object lbFiltro: TLabel
+    Left = 16
     Top = 8
+    Width = 24
+    Height = 13
+    Caption = 'Filtro'
+  end
+  object lblResultado: TLabel
+    Left = 16
+    Top = 48
+    Width = 48
+    Height = 13
+    Caption = 'Resultado'
+  end
+  object btnFiltrar: TButton
+    Left = 336
+    Top = 16
     Width = 75
     Height = 25
-    Caption = 'Button1'
+    Caption = 'Filtrar'
     TabOrder = 0
-    OnClick = Button1Click
+    OnClick = btnFiltrarClick
   end
-  object Memo1: TMemo
+  object memResultado: TMemo
     Left = 16
-    Top = 56
+    Top = 64
     Width = 393
-    Height = 225
-    Lines.Strings = (
-      'Memo1')
+    Height = 217
     TabOrder = 1
+  end
+  object edtFiltro: TEdit
+    Left = 16
+    Top = 24
+    Width = 312
+    Height = 21
+    TabOrder = 2
   end
 end

@@ -2,7 +2,7 @@ program GitHubJSON;
 
 uses
   Vcl.Forms,
-  uTelaPrincipal in 'uTelaPrincipal.pas' {Form2},
+  uTelaPrincipal in 'uTelaPrincipal.pas' {frmTelaPrincipal},
   uRepositorio in 'uRepositorio.pas';
 
 {$R *.res}
@@ -10,6 +10,6 @@ uses
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TForm2, Form2);
+  Application.CreateForm(TfrmTelaPrincipal, frmTelaPrincipal);
   Application.Run;
 end.

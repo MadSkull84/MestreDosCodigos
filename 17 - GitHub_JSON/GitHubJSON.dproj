@@ -99,7 +99,7 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="uTelaPrincipal.pas">
-            <Form>Form2</Form>
+            <Form>frmTelaPrincipal</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="uRepositorio.pas"/>

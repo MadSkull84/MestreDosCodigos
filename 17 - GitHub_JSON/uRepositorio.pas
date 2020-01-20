@@ -19,7 +19,7 @@ type
   public
     property Id: Int64 read FId;
     property Name: string read FName;
-    property Url: string read FUrl;
+    property Html_Url: string read FUrl;
     property Description: string read FDescription;
   end;
 
