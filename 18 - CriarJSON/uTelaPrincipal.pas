@@ -1,3 +1,35 @@
+(*
+18 - Utilizando classes nativas do Delphi (System.JSON), crie um conteúdo JSON
+     que contenha campos do tipo texto, numérico, condicional e lista.
+     O resultado do JSON deve ser igual ao abaixo:
+    {
+        "player": "Mystery",
+        "active": true,
+        "territories": [
+            {
+                "territory": "Delphi",
+                "level": "Squire",
+                "experience": 17,
+                "dateLastMission": "2019-08-20"
+            },
+            {
+                "territory": "SQL",
+                "level": null,
+                "experience": 0,
+                "dateLastMission": null
+            },
+            {
+                "territory": "Software Architecture",
+                "level": "Knight",
+                "experience": 34,
+                "dateLastMission": "2019-07-01"
+            }
+        ]
+    }
+
+Autor: Eder Correia Lira
+*)
+
 unit uTelaPrincipal;
 
 interface
@@ -13,7 +45,7 @@ type
     procedure Button1Click(Sender: TObject);
   private
     function RetornaValorJSONValido(const pValor: string): TJSONValue;
-    function AdicionaArrayJSON(const pTerritorio, pLevel, pExperiencia,
+    function AdicionarItemJSON(const pTerritorio, pLevel, pExperiencia,
       pDataUltimaMissao: string): TJSONObject;
   public
     { Public declarations }
@@ -46,7 +78,7 @@ begin
   result := jValor;
 end;
 
-function TfrmTelaPrincipal.AdicionaArrayJSON(const pTerritorio, pLevel,
+function TfrmTelaPrincipal.AdicionarItemJSON(const pTerritorio, pLevel,
   pExperiencia, pDataUltimaMissao: string): TJSONObject;
 var
   oJSON: TJSONObject;
@@ -64,20 +96,20 @@ var
   oJSON: TJSONObject;
   oJSONFilhos: TJSONArray;
 begin
-    oJSON := TJSONObject.Create;
-    try
-      oJSON.AddPair('player', RetornaValorJSONValido('Mystery'));
-      oJSON.AddPair('active', RetornaValorJSONValido('true'));
-      oJSON.AddPair('territories', RetornaValorJSONValido('null'));
-      oJSONFilhos := TJSONArray.Create;
-      oJSONFilhos.AddElement(AdicionaArrayJSON('Delphi','Squire','17','2019-08-20'));
-      oJSONFilhos.AddElement(AdicionaArrayJSON('SQL','null','0','null'));
-      oJSONFilhos.AddElement(AdicionaArrayJSON('Software Architecture','Knight','34','2019-07-01'));
-      oJSON.AddPair('territories',oJSONFilhos);
-      memo1.Lines.Text := oJSON.ToString;
-    finally
-      FreeAndNil(oJSON);
-    end;
+  oJSON := TJSONObject.Create;
+  try
+    oJSON.AddPair('player', RetornaValorJSONValido('Mystery'));
+    oJSON.AddPair('active', RetornaValorJSONValido('true'));
+    oJSON.AddPair('territories', RetornaValorJSONValido('null'));
+    oJSONFilhos := TJSONArray.Create;
+    oJSONFilhos.AddElement(AdicionarItemJSON('Delphi','Squire','17','2019-08-20'));
+    oJSONFilhos.AddElement(AdicionarItemJSON('SQL','null','0','null'));
+    oJSONFilhos.AddElement(AdicionarItemJSON('Software Architecture','Knight','34','2019-07-01'));
+    oJSON.AddPair('territories',oJSONFilhos);
+    memo1.Lines.Text := oJSON.ToString;
+  finally
+    FreeAndNil(oJSON);
+  end;
 end;
 
 end.
