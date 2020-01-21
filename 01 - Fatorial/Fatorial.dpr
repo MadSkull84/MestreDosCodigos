@@ -1,6 +1,7 @@
 {
 01 - Em uma aplicação console, construa um programa que faça o cálculo fatorial
-     do número informado pelo usuário
+     do número informado pelo usuário.
+
 Autor: Eder Correia Lira
 }
 
@@ -34,7 +35,6 @@ begin
 end;
 
 begin
-  nFatorial := ZeroValue;
   repeat
     write('Informe um valor maior que 0(zero) e menor ou igual a 15(quinze): ');
     readln(sValor);

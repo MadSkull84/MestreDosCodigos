@@ -2,6 +2,7 @@
 02 - Em uma aplicação console, construa um programa que leia uma lista de números
      informada pelo usuário. Em seguida, através do algoritmo merge-sort, faça a
      ordenação da lista e apresente o resultado.
+
 Autor: Eder Correia Lira
 }
 

@@ -4,6 +4,7 @@
      para caixa-mista, ou seja, as iniciais de cada nome devem ser maiúsculas.
      Leve em consideração que as preposições (“de”, “do”, “dos”, ”e”, etc.)
      devem ser convertidas para minúsculas.
+
 Autor: Eder Correia Lira
 }
 

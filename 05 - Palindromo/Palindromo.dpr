@@ -1,6 +1,7 @@
 {
 05 - Em uma aplicação console, construa um programa que leia uma lista de frases.
      Apresente ao usuário apenas as frases que formam um palíndromo.
+
 Autor: Eder Correia Lira
 }
 
@@ -31,13 +32,13 @@ end;
 function PreparaFrase(const pFrase: string): string;
 type
   USAscii20127 = type AnsiString(20127);
+const
+  sRemover: TArray<string> = [' ',',',':','-','"'];
 var
   sFrase: string;
-  sRemover: TArray<string>;
   nPosicao: integer;
 begin
   sFrase := pFrase;
-  sRemover := [' ',',',':','-','"'];
   //remover caracteres
   for nPosicao := ZeroValue to High(sRemover) do
     sFrase := ReplaceStr(sFrase,sRemover[nPosicao],EmptyStr);
@@ -47,7 +48,6 @@ end;
 
 function RetornaPalindromo(const pListaFrases: TArray<string>): TArray<string>;
 var
-  nPosicao: integer;
   sFrase: string;
   sFraseSemAcento: string;
 begin

@@ -15,7 +15,7 @@ begin
   try
     result := oExtenso.NumeroPorExtenso(pValor);
   finally
-    oExtenso.Free;
+    FreeAndNil(oExtenso);
   end;
 end;
 

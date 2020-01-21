@@ -26,6 +26,7 @@ uses
 
 const
   sNomeDll = 'CalcGeometricos_dll.dll';
+  sDllNaoEncontrada = 'Dll não encontrada!';
 
 { TCalcularArea }
 
@@ -60,7 +61,7 @@ begin
       Writeln(Format('A área do triângulo é: %0.2f',[nArea]));
     end
     else
-      Writeln('Dll não encontrada!');
+      Writeln(sDllNaoEncontrada);
     Readln;
   finally
     FreeLibrary(oHandle);
@@ -87,7 +88,7 @@ begin
       Writeln(Format('A área do quadrado/retângulo é: %0.2f',[nArea]));
     end
     else
-      Writeln('Dll não encontrada!');
+      Writeln(sDllNaoEncontrada);
     Readln;
   finally
     FreeLibrary(oHandle);
@@ -112,7 +113,7 @@ begin
       Writeln(Format('A área do círculo é: %0.2f',[nArea]));
     end
     else
-      Writeln('Dll não encontrada!');
+      Writeln(sDllNaoEncontrada);
     Readln;
   finally
     FreeLibrary(oHandle);

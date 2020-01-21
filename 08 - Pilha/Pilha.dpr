@@ -13,6 +13,7 @@
       * Faça o mesmo procedimento com a pilha de inteiros;
       * Imprima o retorno da função Size dos dois objetos;
 
+Autor: Eder Correia Lira
 }
 
 program Pilha;

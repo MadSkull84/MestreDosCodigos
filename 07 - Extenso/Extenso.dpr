@@ -16,9 +16,6 @@ program Extenso;
 uses
   System.SysUtils, System.Math;
 
-var
-  sNumero: string;
-
 function NumeroPorExtenso(const pValor: currency): string;
   external 'Extenso_dll.dll';
 
