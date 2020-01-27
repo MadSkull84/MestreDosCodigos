@@ -21,11 +21,8 @@ object frmTelaPrincipal: TfrmTelaPrincipal
     Height = 41
     Align = alTop
     TabOrder = 0
-    ExplicitLeft = 88
-    ExplicitTop = 32
-    ExplicitWidth = 185
     object btAnterior: TSpeedButton
-      Left = 8
+      Left = 32
       Top = 8
       Width = 23
       Height = 22
@@ -33,12 +30,44 @@ object frmTelaPrincipal: TfrmTelaPrincipal
       OnClick = btAnteriorClick
     end
     object btProximo: TSpeedButton
-      Left = 32
+      Left = 56
       Top = 8
       Width = 23
       Height = 22
       Caption = '>'
       OnClick = btProximoClick
+    end
+    object btnUltimo: TSpeedButton
+      Left = 80
+      Top = 8
+      Width = 23
+      Height = 22
+      Caption = '>>'
+      OnClick = btnUltimoClick
+    end
+    object btnPrimeiro: TSpeedButton
+      Left = 8
+      Top = 8
+      Width = 23
+      Height = 22
+      Caption = '<<'
+      OnClick = btnPrimeiroClick
+    end
+    object btnRecarregar: TSpeedButton
+      Left = 224
+      Top = 8
+      Width = 121
+      Height = 22
+      Caption = 'Recarregar Arquivo'
+      OnClick = btnRecarregarClick
+    end
+    object btnSalvarArquivo: TSpeedButton
+      Left = 352
+      Top = 8
+      Width = 121
+      Height = 22
+      Caption = 'Salvar Arquivo'
+      OnClick = btnSalvarArquivoClick
     end
   end
   object pnlClient: TPanel
@@ -48,9 +77,6 @@ object frmTelaPrincipal: TfrmTelaPrincipal
     Height = 281
     Align = alClient
     TabOrder = 1
-    ExplicitTop = 47
-    ExplicitWidth = 635
-    ExplicitHeight = 218
     object lblID: TLabel
       Left = 8
       Top = 8
@@ -151,7 +177,7 @@ object frmTelaPrincipal: TfrmTelaPrincipal
       Height = 21
       Date = 43856.000000000000000000
       Format = 'dd/MM/yyyy'
-      Time = 0.925733946758555300
+      Time = 0.925733946758555200
       DateFormat = dfLong
       TabOrder = 3
     end
@@ -263,8 +289,29 @@ object frmTelaPrincipal: TfrmTelaPrincipal
     Height = 41
     Align = alBottom
     TabOrder = 2
-    ExplicitLeft = 232
-    ExplicitTop = 231
-    ExplicitWidth = 185
+    object btnNovo: TSpeedButton
+      Left = 8
+      Top = 8
+      Width = 65
+      Height = 22
+      Caption = 'Novo'
+      OnClick = btnNovoClick
+    end
+    object btnExcluir: TSpeedButton
+      Left = 72
+      Top = 8
+      Width = 65
+      Height = 22
+      Caption = 'Remover'
+      OnClick = btnExcluirClick
+    end
+    object btnSalvar: TSpeedButton
+      Left = 408
+      Top = 8
+      Width = 65
+      Height = 22
+      Caption = 'Salvar'
+      OnClick = btnSalvarClick
+    end
   end
 end

@@ -51,14 +51,32 @@ type
     edtEditar: TEdit;
     lblAvatar: TLabel;
     edtAvatar: TEdit;
+    btnUltimo: TSpeedButton;
+    btnPrimeiro: TSpeedButton;
+    btnNovo: TSpeedButton;
+    btnExcluir: TSpeedButton;
+    btnSalvar: TSpeedButton;
+    btnRecarregar: TSpeedButton;
+    btnSalvarArquivo: TSpeedButton;
     procedure FormCreate(Sender: TObject);
     procedure btAnteriorClick(Sender: TObject);
     procedure btProximoClick(Sender: TObject);
+    procedure btnPrimeiroClick(Sender: TObject);
+    procedure btnUltimoClick(Sender: TObject);
+    procedure btnNovoClick(Sender: TObject);
+    procedure btnSalvarClick(Sender: TObject);
+    procedure btnSalvarArquivoClick(Sender: TObject);
+    procedure btnRecarregarClick(Sender: TObject);
+    procedure btnExcluirClick(Sender: TObject);
   private
     { Private declarations }
     FPosicaoAtual: integer;
     FoIXMLResponseType: IXMLResponseType;
+    FNovoRegistro: boolean;
+    function RetornaDataValida(const pData: string): TDate;
+    function RetornaMaiorID: integer;
     procedure CarregaDados(const nPosicao: integer);
+    procedure CarregarArquivo;
   public
     { Public declarations }
   end;
@@ -69,19 +87,116 @@ var
 implementation
 
 uses
-  System.Math;
+  System.Math, System.DateUtils, Xml.XMLIntf, Xml.XMLDoc;
 
 {$R *.dfm}
 
 procedure TfrmTelaPrincipal.btAnteriorClick(Sender: TObject);
 begin
+  FNovoRegistro := False;
   if FPosicaoAtual > ZeroValue then
     FPosicaoAtual := Pred(FPosicaoAtual);
   CarregaDados(FPosicaoAtual);
 end;
 
+procedure TfrmTelaPrincipal.btnExcluirClick(Sender: TObject);
+begin
+  if FPosicaoAtual >= ZeroValue then
+  begin
+    FoIXMLResponseType.Result.Delete(FPosicaoAtual);
+    if FPosicaoAtual > Pred(FoIXMLResponseType.Result.Count) then
+      FPosicaoAtual := Pred(FoIXMLResponseType.Result.Count);
+
+    CarregaDados(FPosicaoAtual);
+  end;
+end;
+
+procedure TfrmTelaPrincipal.btnNovoClick(Sender: TObject);
+begin
+  FNovoRegistro := True;
+  edtID.Text := IntToStr(RetornaMaiorID);
+  edtNome.Clear;
+  edtSobreNome.Clear;
+  edtDataNascimento.Date := Date;
+  edtEmail.Clear;
+  edtTelefone.Clear;
+  edtWebsite.Clear;
+  edtEndereco.Clear;
+  edtRecurso.Clear;
+  edtEditar.Clear;
+  edtAvatar.Clear;
+
+  cbGenero.ItemIndex := ZeroValue;
+  cbStatus.ItemIndex := ZeroValue;
+end;
+
+procedure TfrmTelaPrincipal.btnPrimeiroClick(Sender: TObject);
+begin
+  FNovoRegistro := False;
+  FPosicaoAtual := ZeroValue;
+  CarregaDados(FPosicaoAtual);
+end;
+
+procedure TfrmTelaPrincipal.btnRecarregarClick(Sender: TObject);
+begin
+  CarregarArquivo;
+end;
+
+procedure TfrmTelaPrincipal.btnSalvarArquivoClick(Sender: TObject);
+var
+  oXMLDocument: IXMLDocument;
+begin
+  oXMLDocument := TXMLDocument.Create(nil);
+  oXMLDocument.LoadFromXML(FoIXMLResponseType.XML);
+  oXMLDocument.SaveToFile(ExtractFilePath(Application.ExeName) + 'EXE_19_XML.xml');
+end;
+
+procedure TfrmTelaPrincipal.btnSalvarClick(Sender: TObject);
+var
+  oItem: IXMLItemType;
+  oRecurso: IXMLSelfType;
+  oEditar: IXMLEditType;
+  oAvatar: IXMLAvatarType;
+begin
+  if FNovoRegistro then
+  begin
+    oItem := FoIXMLResponseType.Result.Add;
+    oItem.Id := StrToInt(edtID.Text);
+    FPosicaoAtual := Pred(FoIXMLResponseType.Result.Count);
+    FNovoRegistro := False;
+  end
+  else
+    oItem := FoIXMLResponseType.Result.Item[FPosicaoAtual];
+
+  oItem.First_name := edtNome.Text;
+  oItem.Last_name  := edtSobreNome.Text;
+  oItem.Gender     := cbGenero.Text;
+  oItem.Dob        := FormatDateTime('yyyy-MM-dd', edtDataNascimento.Date);
+  oItem.Email      := edtEmail.Text;
+  oItem.Phone      := edtTelefone.Text;
+  oItem.Website    := edtWebsite.Text;
+  oItem.Address    := edtEndereco.Text;
+  oItem.Status     := cbStatus.Text;
+
+  oRecurso := oItem._links.Self;
+  oEditar  := oItem._links.Edit;
+  oAvatar  := oItem._links.Avatar;
+
+  oRecurso.Href := edtRecurso.Text;
+  oEditar.Href := edtEditar.Text;
+  oAvatar.Href := edtAvatar.Text;
+end;
+
+procedure TfrmTelaPrincipal.btnUltimoClick(Sender: TObject);
+begin
+  FNovoRegistro := False;
+  FPosicaoAtual := Pred(FoIXMLResponseType.Result.Count);
+  CarregaDados(FPosicaoAtual);
+end;
+
 procedure TfrmTelaPrincipal.btProximoClick(Sender: TObject);
 begin
+  FNovoRegistro := False;
   if FPosicaoAtual < Pred(FoIXMLResponseType.Result.Count) then
     FPosicaoAtual := Succ(FPosicaoAtual);
   CarregaDados(FPosicaoAtual);
@@ -96,25 +211,61 @@ begin
     cbGenero.ItemIndex := ZeroValue
   else
     cbGenero.ItemIndex := PositiveValue;
-  edtDataNascimento.Date := StrToDateDef(FoIXMLResponseType.Result.Item[nPosicao].Dob, Date);
+  edtDataNascimento.Date := RetornaDataValida(FoIXMLResponseType.Result.Item[nPosicao].Dob);
   edtEmail.Text := FoIXMLResponseType.Result.Item[nPosicao].Email;
   edtTelefone.Text := FoIXMLResponseType.Result.Item[nPosicao].Phone;
   edtWebsite.Text := FoIXMLResponseType.Result.Item[nPosicao].Website;
   edtEndereco.Text := FoIXMLResponseType.Result.Item[nPosicao].Address;
   if FoIXMLResponseType.Result.Item[nPosicao].Status.ToLower = 'active' then
-    cbGenero.ItemIndex := ZeroValue
+    cbStatus.ItemIndex := ZeroValue
   else
-    cbGenero.ItemIndex := PositiveValue;
+    cbStatus.ItemIndex := PositiveValue;
   edtRecurso.Text := FoIXMLResponseType.Result.Item[nPosicao]._links.Self.Href;
   edtEditar.Text := FoIXMLResponseType.Result.Item[nPosicao]._links.Edit.Href;
   edtAvatar.Text := FoIXMLResponseType.Result.Item[nPosicao]._links.Avatar.Href;
 end;
 
-procedure TfrmTelaPrincipal.FormCreate(Sender: TObject);
+procedure TfrmTelaPrincipal.CarregarArquivo;
 begin
   FoIXMLResponseType := Loadresponse(ExtractFilePath(Application.ExeName) + 'EXE_19_XML.xml');
   FPosicaoAtual := ZeroValue;
   CarregaDados(FPosicaoAtual);
+end;
+
+procedure TfrmTelaPrincipal.FormCreate(Sender: TObject);
+begin
+  FNovoRegistro := False;
+  CarregarArquivo;
+end;
+
+function TfrmTelaPrincipal.RetornaDataValida(const pData: string): TDate;
+var
+  iAno: Word;
+  iMes: Word;
+  iDia: Word;
+  nData: TDate;
+begin
+  iAno := StrToIntDef(Copy(pData, ZeroValue, 4), ZeroValue);
+  iMes := StrToIntDef(Copy(pData, 6, 2), ZeroValue);
+  iDia := StrToIntDef(Copy(pData, 9, 2), ZeroValue);
+  nData := EncodeDate(iAno, iMes, iDia);
+  if nData = ZeroValue then
+    nData := Date;
+  result := nData;
+end;
+
+function TfrmTelaPrincipal.RetornaMaiorID: integer;
+var
+  nPosicao: integer;
+  iMaior: integer;
+begin
+  iMaior := PositiveValue;
+  for nPosicao := ZeroValue to Pred(FoIXMLResponseType.Result.Count) do
+  begin
+    if FoIXMLResponseType.Result.Item[nPosicao].Id > iMaior then
+      iMaior := FoIXMLResponseType.Result.Item[nPosicao].Id;
+  end;
+  result := Succ(iMaior);
 end;
 
 end.
