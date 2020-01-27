@@ -2,7 +2,8 @@ library CalcGeometricos_dll;
 
 uses
   System.SysUtils,
-  System.Classes;
+  System.Classes,
+  System.Math;
 
 {$R *.res}
 
@@ -18,7 +19,7 @@ end;
 
 function AreaCirculo(const pRaio: Extended): Extended;
 begin
-  Result := System.Pi * (pRaio * pRaio);
+  Result := Pi * (pRaio * pRaio);
 end;
 
 exports

@@ -35,6 +35,8 @@ begin
 end;
 
 begin
+  ReportMemoryLeaksOnShutdown := True;
+
   repeat
     write('Informe um valor maior que 0(zero) e menor ou igual a 15(quinze): ');
     readln(sValor);

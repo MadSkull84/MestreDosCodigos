@@ -24,10 +24,10 @@ var
   sValor: string;
 begin
   repeat
-    Write('Informe o número válido entre 1 e 999: ');
+    Write('Informe o número válido entre 0,00 e 999,99: ');
     Readln(sValor);
-    Result := StrToFloatDef(sValor, ZeroValue);
-  until (result > ZeroValue) and (result < 1000);
+    Result := StrToCurrDef(sValor, ZeroValue);
+  until (result >= ZeroValue) and (result < 1000);
 end;
 
 begin

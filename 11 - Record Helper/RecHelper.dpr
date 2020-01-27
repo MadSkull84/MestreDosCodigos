@@ -29,6 +29,6 @@ begin
   writeln('Label: ' + eContinente.AsLabel);
   writeln('String: ' + eContinente.AsString);
   writeln('Byte: ' + eContinente.AsByte.ToString);
-  writeln('Parse: ' + eContinente.Parse(4).AsLabel);
+  writeln('Parse: ' + eContinente.Parse(cEuropa.AsByte).AsLabel);
   Readln;
 end.

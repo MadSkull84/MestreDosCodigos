@@ -33,6 +33,8 @@ begin
 end;
 
 begin
+  ReportMemoryLeaksOnShutdown := True;
+
   repeat
     write('Informe uma lista de nomes separados por ";": ');
     readln(sListaNomesEntrada);

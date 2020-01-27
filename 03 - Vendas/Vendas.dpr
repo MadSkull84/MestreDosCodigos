@@ -42,6 +42,8 @@ begin
 end;
 
 begin
+  ReportMemoryLeaksOnShutdown := True;
+
   oVendedor := TVendedor.Create;
   try
     Writeln('Informe os dados do vendedor');

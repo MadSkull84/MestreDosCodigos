@@ -27,6 +27,9 @@ uses
   System.Math,
   uPilha in 'uPilha.pas';
 
+const
+  sFim = 'fim';
+
 var
   oPilhaString: TPilha<string>;
   oPilhaInteiro: TPilha<Integer>;
@@ -35,24 +38,25 @@ procedure LerListaString;
 var
   sValor: string;
 begin
-  Writeln('Informe uma lista de strings, digite "fim" para encerrar:');
+  Writeln('Informe uma lista de strings, digite "' + sFim + '" para encerrar:');
   repeat
     Readln(sValor);
-    if sValor.ToLower <> 'fim' then
+    if sValor.ToLower <> sFim then
       oPilhaString.Push(sValor);
-  until sValor.ToLower = 'fim';
+  until sValor.ToLower = sFim;
 end;
 
 procedure LerListaInteiro;
 var
   sValor: string;
 begin
-  Writeln('Informe uma lista de inteiros, digite "0" para encerrar:');
+  Writeln('Informe uma lista de inteiros, digite "' + sFim + '" para encerrar:');
   repeat
     Readln(sValor);
-    if StrToIntDef(sValor, NegativeValue) > ZeroValue then
+    if (sValor.ToLower <> sFim) and
+       (StrToIntDef(sValor, NegativeValue) >= ZeroValue) then
       oPilhaInteiro.Push(sValor.ToInteger);
-  until StrToIntDef(sValor, NegativeValue) = ZeroValue;
+  until sValor.ToLower = sFim;
 end;
 
 begin

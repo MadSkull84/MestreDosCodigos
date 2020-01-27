@@ -16,7 +16,6 @@ type
 
     procedure Push(const pItem: T);
     function Pop: T;
-    function Peek: T;
     function Size: integer;
     function IsEmpty: boolean;
   end;
@@ -46,13 +45,8 @@ end;
 
 function TPilha<T>.Pop: T;
 begin
-  result := Peek;
-  FLista.Delete(ZeroValue);
-end;
-
-function TPilha<T>.Peek: T;
-begin
   result := FLista[ZeroValue];
+  FLista.Delete(ZeroValue);
 end;
 
 function TPilha<T>.Size: Integer;

@@ -57,7 +57,7 @@ var
 begin
   oIXMLResponseType := Loadresponse(ExtractFilePath(Application.ExeName) + 'EXE_19_XML.xml');
   memDados.Clear;
-  for nPosicao := 0 to oIXMLResponseType.Result.Count - 1 do
+  for nPosicao := 0 to Pred(oIXMLResponseType.Result.Count) do
   begin
     memDados.Lines.Add('ID: ' + oIXMLResponseType.Result.Item[nPosicao].Id.ToString);
     memDados.Lines.Add('Nome: ' + oIXMLResponseType.Result.Item[nPosicao].First_name);
@@ -72,7 +72,7 @@ begin
     memDados.Lines.Add('Link (HATEOAS):');
     memDados.Lines.Add('|_ Recurso: ' + oIXMLResponseType.Result.Item[nPosicao]._links.Self.Href);
     memDados.Lines.Add('|_ Editar: ' + oIXMLResponseType.Result.Item[nPosicao]._links.Edit.Href);
-    memDados.Lines.Add('|_ Avatar: ' + oIXMLResponseType.Result.Item[nPosicao]._links.Edit.Href);
+    memDados.Lines.Add('|_ Avatar: ' + oIXMLResponseType.Result.Item[nPosicao]._links.Avatar.Href);
     memDados.Lines.Add(EmptyStr);
   end;
 end;

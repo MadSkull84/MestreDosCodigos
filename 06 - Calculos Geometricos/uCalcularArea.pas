@@ -54,7 +54,7 @@ begin
 
   oHandle := LoadLibrary(sNomeDll);
   try
-    if (oHandle <> 0) then
+    if (oHandle <> ZeroValue) then
     begin
       oAreaTrianguloDLL := GetProcAddress(oHandle, pWideChar('AreaTriangulo'));
       nArea := oAreaTrianguloDLL(nBase, nAltura);
@@ -81,7 +81,7 @@ begin
 
   oHandle := LoadLibrary(sNomeDll);
   try
-    if (oHandle <> 0) then
+    if (oHandle <> ZeroValue) then
     begin
       oAreaQuadrilateroDLL := GetProcAddress(oHandle, pWideChar('AreaQuadrilatero'));
       nArea := oAreaQuadrilateroDLL(nLadoA, nLadoB);
@@ -106,7 +106,7 @@ begin
 
   oHandle := LoadLibrary(sNomeDll);
   try
-    if (oHandle <> 0) then
+    if (oHandle <> ZeroValue) then
     begin
       oAreaCirculoDLL := GetProcAddress(oHandle, pWideChar('AreaCirculo'));
       nArea := oAreaCirculoDLL(nRaio);

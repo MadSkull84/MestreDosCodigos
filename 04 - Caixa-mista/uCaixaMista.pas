@@ -25,7 +25,7 @@ end;
 
 function TCaixaMista.AplicaPrimeiraMaiuscula(const pValor: string): string;
 begin
-  result :=  string(pValor[1]).ToUpper + string(Copy(pValor,2)).ToLower;
+  result :=  string(pValor[PositiveValue]).ToUpper + string(Copy(pValor,2)).ToLower;
 end;
 
 function TCaixaMista.CaixaMista(const pValor: string): string;
@@ -35,7 +35,7 @@ var
 begin
   result := EmptyStr;
   sNomes := SplitString(pValor, ' ');
-  for nPosicao := 0 to High(sNomes) do
+  for nPosicao := ZeroValue to High(sNomes) do
   begin
     if EhPreposicao(sNomes[nPosicao])  then
       result := result + Trim(sNomes[nPosicao].ToLower) + ' '
@@ -50,7 +50,7 @@ var
   nPosicao: integer;
 begin
   sListaNomes := SplitString(pValor, ';');
-  for nPosicao := 0 to High(sListaNomes) do
+  for nPosicao := ZeroValue to High(sListaNomes) do
   begin
     if Trim(result) <> EmptyStr then
       result := result + #10#13;

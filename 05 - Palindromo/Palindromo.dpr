@@ -63,6 +63,8 @@ begin
 end;
 
 begin
+  ReportMemoryLeaksOnShutdown := True;
+
   repeat
     write('Informe uma lista de frases separadas por ";": ');
     readln(sListaFrasesEntrada);

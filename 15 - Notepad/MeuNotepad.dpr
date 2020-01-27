@@ -26,6 +26,7 @@ var
 
 begin
   ReportMemoryLeaksOnShutdown := True;
+
   oCriadorMagico := TCriadorMagico.Create;
   try
     writeln('Tecle "Enter" para abrir o Notepad');

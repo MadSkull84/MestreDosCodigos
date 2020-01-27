@@ -6,7 +6,7 @@ type
   TExtenso = class
   private
     function EhDez(const pValor: currency): boolean;
-    function RetornaExtenso(const pValor: Currency; const pCasa: integer): string;
+    function RetornaExtenso(const pValor: currency; const pCasa: integer): string;
   public
     function NumeroPorExtenso(const pValor: currency): string;
   end;
@@ -79,14 +79,32 @@ function TExtenso.NumeroPorExtenso(const pValor: currency): string;
 var
   nInteiro: integer;
   nCentavo: integer;
+  sExtensoInteiro: string;
+  sExtensoCentavo: string;
   sExtenso: string;
 begin
+  sExtensoInteiro := EmptyStr;
+  sExtensoCentavo := EmptyStr;
+
   nInteiro := Trunc(pValor);
   nCentavo := Trunc((pValor - nInteiro) * 100);
 
-  sExtenso := RetornaExtenso(nInteiro, Length(FloatToStr(pValor))) + cEspaco + cReal;
+  if nInteiro > ZeroValue then
+    sExtensoInteiro := RetornaExtenso(nInteiro, Length(FloatToStr(pValor))) + cEspaco + cReal;
+
   if nCentavo > ZeroValue then
-    sExtenso := sExtenso + cEspaco + cE + cEspaco + RetornaExtenso(nCentavo, Length(FloatToStr(pValor))) + cEspaco + cCentavo;
+    sExtensoCentavo := RetornaExtenso(nCentavo, Length(FloatToStr(pValor))) + cEspaco + cCentavo;
+
+  sExtenso := sExtensoInteiro;
+  if sExtensoCentavo <> EmptyStr then
+  begin
+    if sExtenso <> EmptyStr then
+      sExtenso := sExtenso + cEspaco + cE + cEspaco;
+    sExtenso := sExtenso + sExtensoCentavo;
+  end;
+
+  if sExtenso = EmptyStr then
+    sExtenso := 'zero' + cEspaco + cReal;
 
   Result := sExtenso;
 end;
