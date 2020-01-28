@@ -75,7 +75,10 @@ type
     FNovoRegistro: boolean;
     function RetornaDataValida(const pData: string): TDate;
     function RetornaMaiorID: integer;
-    procedure CarregaDados(const nPosicao: integer);
+    function ExisteDados: boolean;
+    procedure HabilitaBotoes;
+    procedure LimparCampos;
+    procedure CarregaDados;
     procedure CarregarArquivo;
   public
     { Public declarations }
@@ -94,9 +97,10 @@ uses
 procedure TfrmTelaPrincipal.btAnteriorClick(Sender: TObject);
 begin
   FNovoRegistro := False;
+  HabilitaBotoes;
   if FPosicaoAtual > ZeroValue then
     FPosicaoAtual := Pred(FPosicaoAtual);
-  CarregaDados(FPosicaoAtual);
+  CarregaDados;
 end;
 
 procedure TfrmTelaPrincipal.btnExcluirClick(Sender: TObject);
@@ -105,40 +109,36 @@ begin
   begin
     FoIXMLResponseType.Result.Delete(FPosicaoAtual);
     if FPosicaoAtual > Pred(FoIXMLResponseType.Result.Count) then
-      FPosicaoAtual := Pred(FoIXMLResponseType.Result.Count);
+      FPosicaoAtual := Pred(FoIXMLResponseType.Result.Count)
+    else if FoIXMLResponseType.Result.Count = ZeroValue then
+      FPosicaoAtual := NegativeValue;
 
-    CarregaDados(FPosicaoAtual);
+    CarregaDados;
   end;
 end;
 
 procedure TfrmTelaPrincipal.btnNovoClick(Sender: TObject);
 begin
   FNovoRegistro := True;
-  edtID.Text := IntToStr(RetornaMaiorID);
-  edtNome.Clear;
-  edtSobreNome.Clear;
-  edtDataNascimento.Date := Date;
-  edtEmail.Clear;
-  edtTelefone.Clear;
-  edtWebsite.Clear;
-  edtEndereco.Clear;
-  edtRecurso.Clear;
-  edtEditar.Clear;
-  edtAvatar.Clear;
-
-  cbGenero.ItemIndex := ZeroValue;
-  cbStatus.ItemIndex := ZeroValue;
+  if FPosicaoAtual = NegativeValue then
+    FPosicaoAtual := ZeroValue;
+  LimparCampos;
+  HabilitaBotoes;
 end;
 
 procedure TfrmTelaPrincipal.btnPrimeiroClick(Sender: TObject);
 begin
   FNovoRegistro := False;
-  FPosicaoAtual := ZeroValue;
-  CarregaDados(FPosicaoAtual);
+  if ExisteDados then
+    FPosicaoAtual := ZeroValue;
+  HabilitaBotoes;
+  CarregaDados;
 end;
 
 procedure TfrmTelaPrincipal.btnRecarregarClick(Sender: TObject);
 begin
+  FNovoRegistro := False;
+  HabilitaBotoes;
   CarregarArquivo;
 end;
 
@@ -158,6 +158,9 @@ var
   oEditar: IXMLEditType;
   oAvatar: IXMLAvatarType;
 begin
+  if FPosicaoAtual = NegativeValue then
+    Exit;
+
   if FNovoRegistro then
   begin
     oItem := FoIXMLResponseType.Result.Add;
@@ -185,57 +188,113 @@ begin
   oRecurso.Href := edtRecurso.Text;
   oEditar.Href := edtEditar.Text;
   oAvatar.Href := edtAvatar.Text;
+
+  HabilitaBotoes;
 end;
 
 procedure TfrmTelaPrincipal.btnUltimoClick(Sender: TObject);
 begin
   FNovoRegistro := False;
-  FPosicaoAtual := Pred(FoIXMLResponseType.Result.Count);
-  CarregaDados(FPosicaoAtual);
+  HabilitaBotoes;
+  if ExisteDados then
+    FPosicaoAtual := Pred(FoIXMLResponseType.Result.Count);
+  CarregaDados;
 end;
 
 procedure TfrmTelaPrincipal.btProximoClick(Sender: TObject);
 begin
   FNovoRegistro := False;
-  if FPosicaoAtual < Pred(FoIXMLResponseType.Result.Count) then
+  HabilitaBotoes;
+  if (ExisteDados) and
+     (FPosicaoAtual < Pred(FoIXMLResponseType.Result.Count)) then
     FPosicaoAtual := Succ(FPosicaoAtual);
-  CarregaDados(FPosicaoAtual);
+  CarregaDados;
 end;
 
-procedure TfrmTelaPrincipal.CarregaDados(const nPosicao: integer);
+procedure TfrmTelaPrincipal.CarregaDados;
+var
+  oItem: IXMLItemType;
 begin
-  edtID.Text := FoIXMLResponseType.Result.Item[nPosicao].Id.ToString;
-  edtNome.Text := FoIXMLResponseType.Result.Item[nPosicao].First_name;
-  edtSobreNome.Text := FoIXMLResponseType.Result.Item[nPosicao].Last_name;
-  if FoIXMLResponseType.Result.Item[nPosicao].Gender.ToLower = 'male' then
+  if FPosicaoAtual = NegativeValue then
+  begin
+    LimparCampos;
+    Exit;
+  end;
+
+  oItem := FoIXMLResponseType.Result.Item[FPosicaoAtual];
+  edtID.Text             := oItem.Id.ToString;
+  edtNome.Text           := oItem.First_name;
+  edtSobreNome.Text      := oItem.Last_name;
+  edtDataNascimento.Date := RetornaDataValida(oItem.Dob);
+  edtEmail.Text          := oItem.Email;
+  edtTelefone.Text       := oItem.Phone;
+  edtWebsite.Text        := oItem.Website;
+  edtEndereco.Text       := oItem.Address;
+
+  if oItem.Gender.ToLower = 'male' then
     cbGenero.ItemIndex := ZeroValue
   else
     cbGenero.ItemIndex := PositiveValue;
-  edtDataNascimento.Date := RetornaDataValida(FoIXMLResponseType.Result.Item[nPosicao].Dob);
-  edtEmail.Text := FoIXMLResponseType.Result.Item[nPosicao].Email;
-  edtTelefone.Text := FoIXMLResponseType.Result.Item[nPosicao].Phone;
-  edtWebsite.Text := FoIXMLResponseType.Result.Item[nPosicao].Website;
-  edtEndereco.Text := FoIXMLResponseType.Result.Item[nPosicao].Address;
-  if FoIXMLResponseType.Result.Item[nPosicao].Status.ToLower = 'active' then
+
+  if oItem.Status.ToLower = 'active' then
     cbStatus.ItemIndex := ZeroValue
   else
     cbStatus.ItemIndex := PositiveValue;
-  edtRecurso.Text := FoIXMLResponseType.Result.Item[nPosicao]._links.Self.Href;
-  edtEditar.Text := FoIXMLResponseType.Result.Item[nPosicao]._links.Edit.Href;
-  edtAvatar.Text := FoIXMLResponseType.Result.Item[nPosicao]._links.Avatar.Href;
+
+  edtRecurso.Text := oItem._links.Self.Href;
+  edtEditar.Text  := oItem._links.Edit.Href;
+  edtAvatar.Text  := oItem._links.Avatar.Href;
 end;
 
 procedure TfrmTelaPrincipal.CarregarArquivo;
 begin
   FoIXMLResponseType := Loadresponse(ExtractFilePath(Application.ExeName) + 'EXE_19_XML.xml');
-  FPosicaoAtual := ZeroValue;
-  CarregaDados(FPosicaoAtual);
+  if ExisteDados then
+    FPosicaoAtual    := ZeroValue
+  else
+    FPosicaoAtual    := NegativeValue;
+  FNovoRegistro      := False;
+  HabilitaBotoes;
+  CarregaDados;
+end;
+
+function TfrmTelaPrincipal.ExisteDados: boolean;
+begin
+  result := FoIXMLResponseType.Result.Count > ZeroValue;
 end;
 
 procedure TfrmTelaPrincipal.FormCreate(Sender: TObject);
 begin
   FNovoRegistro := False;
+  HabilitaBotoes;
   CarregarArquivo;
+end;
+
+procedure TfrmTelaPrincipal.HabilitaBotoes;
+begin
+  btnExcluir.Enabled       := not FNovoRegistro;
+  btnSalvarArquivo.Enabled := not FNovoRegistro;
+end;
+
+procedure TfrmTelaPrincipal.LimparCampos;
+begin
+  if FNovoRegistro then
+    edtID.Text := IntToStr(RetornaMaiorID)
+  else
+    edtID.Clear;
+  edtNome.Clear;
+  edtSobreNome.Clear;
+  edtDataNascimento.Date := Date;
+  edtEmail.Clear;
+  edtTelefone.Clear;
+  edtWebsite.Clear;
+  edtEndereco.Clear;
+  edtRecurso.Clear;
+  edtEditar.Clear;
+  edtAvatar.Clear;
+
+  cbGenero.ItemIndex := ZeroValue;
+  cbStatus.ItemIndex := ZeroValue;
 end;
 
 function TfrmTelaPrincipal.RetornaDataValida(const pData: string): TDate;
@@ -245,9 +304,9 @@ var
   iDia: Word;
   nData: TDate;
 begin
-  iAno := StrToIntDef(Copy(pData, ZeroValue, 4), ZeroValue);
-  iMes := StrToIntDef(Copy(pData, 6, 2), ZeroValue);
-  iDia := StrToIntDef(Copy(pData, 9, 2), ZeroValue);
+  iAno  := StrToIntDef(Copy(pData, ZeroValue, 4), ZeroValue);
+  iMes  := StrToIntDef(Copy(pData, 6, 2), ZeroValue);
+  iDia  := StrToIntDef(Copy(pData, 9, 2), ZeroValue);
   nData := EncodeDate(iAno, iMes, iDia);
   if nData = ZeroValue then
     nData := Date;
@@ -259,7 +318,7 @@ var
   nPosicao: integer;
   iMaior: integer;
 begin
-  iMaior := PositiveValue;
+  iMaior := ZeroValue;
   for nPosicao := ZeroValue to Pred(FoIXMLResponseType.Result.Count) do
   begin
     if FoIXMLResponseType.Result.Item[nPosicao].Id > iMaior then
