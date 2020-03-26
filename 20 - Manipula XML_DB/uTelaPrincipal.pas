@@ -44,7 +44,7 @@ type
     lblGenero: TLabel;
     cbStatus: TComboBox;
     lblStatus: TLabel;
-    GroupBox1: TGroupBox;
+    grbLinks: TGroupBox;
     lblRecurso: TLabel;
     edtRecurso: TEdit;
     lblEditar: TLabel;

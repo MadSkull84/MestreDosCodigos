@@ -13,16 +13,16 @@ object frmTelaPrincipal: TfrmTelaPrincipal
   OldCreateOrder = False
   PixelsPerInch = 96
   TextHeight = 13
-  object Button1: TButton
+  object btnCriarJSON: TButton
     Left = 8
     Top = 9
     Width = 75
     Height = 25
     Caption = 'Cria JSON'
     TabOrder = 0
-    OnClick = Button1Click
+    OnClick = btnCriarJSONClick
   end
-  object Memo1: TMemo
+  object memJSON: TMemo
     Left = 8
     Top = 40
     Width = 329

@@ -40,9 +40,9 @@ uses
 
 type
   TfrmTelaPrincipal = class(TForm)
-    Button1: TButton;
-    Memo1: TMemo;
-    procedure Button1Click(Sender: TObject);
+    btnCriarJSON: TButton;
+    memJSON: TMemo;
+    procedure btnCriarJSONClick(Sender: TObject);
   private
     function RetornaValorJSONValido(const pValor: string): TJSONValue;
     function AdicionarItemJSON(const pTerritorio, pLevel, pExperiencia,
@@ -91,7 +91,7 @@ begin
   result := oJSON;
 end;
 
-procedure TfrmTelaPrincipal.Button1Click(Sender: TObject);
+procedure TfrmTelaPrincipal.btnCriarJSONClick(Sender: TObject);
 var
   oJSON: TJSONObject;
   oJSONFilhos: TJSONArray;
@@ -106,7 +106,7 @@ begin
     oJSONFilhos.AddElement(AdicionarItemJSON('SQL','null','0','null'));
     oJSONFilhos.AddElement(AdicionarItemJSON('Software Architecture','Knight','34','2019-07-01'));
     oJSON.AddPair('territories',oJSONFilhos);
-    memo1.Lines.Text := oJSON.ToString;
+    memJSON.Lines.Text := oJSON.ToString;
   finally
     FreeAndNil(oJSON);
   end;

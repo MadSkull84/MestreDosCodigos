@@ -231,7 +231,7 @@ object frmTelaPrincipal: TfrmTelaPrincipal
         'active'
         'inactive')
     end
-    object GroupBox1: TGroupBox
+    object grbLinks: TGroupBox
       Left = 8
       Top = 128
       Width = 464

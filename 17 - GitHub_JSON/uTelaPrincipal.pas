@@ -51,20 +51,25 @@ var
 begin
   InicializarObjetos(FRESTClient, FRESTResponse, FRESTRequest);
   try
-    fRESTRequest.ResourceSuffix := 'repositories?q=' + edtFiltro.Text;
-    FRESTRequest.Execute;
+    try
+      fRESTRequest.ResourceSuffix := 'repositories?q=' + edtFiltro.Text;
+      FRESTRequest.Execute;
 
-    FRepositorios := TJSON.JsonToObject<TRepositorios>(FRESTResponse.JSONValue.ToJSON);
+      FRepositorios := TJSON.JsonToObject<TRepositorios>(FRESTResponse.JSONValue.ToJSON);
 
-    memResultado.Clear;
-    for oRepositorio in FRepositorios.Repositorios do
-    begin
-      memResultado.Lines.Add(oRepositorio.Id.ToString);
-      memResultado.Lines.Add(oRepositorio.Name);
-      memResultado.Lines.Add(oRepositorio.Html_Url);
-      memResultado.Lines.Add(oRepositorio.Description);
-      memResultado.Lines.Add(EmptyStr);
-      memResultado.Lines.Add(EmptyStr);
+      memResultado.Clear;
+      for oRepositorio in FRepositorios.Repositorios do
+      begin
+        memResultado.Lines.Add(oRepositorio.Id.ToString);
+        memResultado.Lines.Add(oRepositorio.Name);
+        memResultado.Lines.Add(oRepositorio.Html_Url);
+        memResultado.Lines.Add(oRepositorio.Description);
+        memResultado.Lines.Add(EmptyStr);
+        memResultado.Lines.Add(EmptyStr);
+      end;
+
+    except on E: Exception do
+      ShowMessage('Ocorreu o seguinte erro ao efetuar a consulta: ' + #13#10 + e.Message);
     end;
   finally
     FinalizarObjetos;

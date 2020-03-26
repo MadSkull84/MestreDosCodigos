@@ -10,6 +10,7 @@ type
   private
     FClass: TClass;
     function EncontraClasse(const pClasse: string): TClass;
+    function ValidaClasse(const pClasse: TClass; var pResultado: TStringList): boolean;
   public
     constructor Create(const pClasse: string);
     function ListaPropriedades: TStringList;
@@ -20,6 +21,9 @@ implementation
 
 uses
   System.RTTI, System.StrUtils;
+
+const
+  sClasseNaoEncontrada = 'Classe não encontrada.';
 
 { TListaPropMet }
 
@@ -36,16 +40,19 @@ var
 begin
   Result := nil;
   RttiContext := TRttiContext.Create;
-  aListaTipos := RttiContext.GetTypes;
-  for RttiInstanceType in aListaTipos do
-  begin
-    if RttiInstanceType.IsInstance and (EndsText(pClasse, RttiInstanceType.Name)) then
+  try
+    aListaTipos := RttiContext.GetTypes;
+    for RttiInstanceType in aListaTipos do
     begin
-      Result := RttiInstanceType.AsInstance.MetaClassType;
-      break;
+      if RttiInstanceType.IsInstance and (EndsText(pClasse, RttiInstanceType.Name)) then
+      begin
+        Result := RttiInstanceType.AsInstance.MetaClassType;
+        break;
+      end;
     end;
+  finally
+    RttiContext.Free;
   end;
-  RttiContext.Free;
 end;
 
 function TListaPropMet.ListaPropriedades: TStringList;
@@ -56,11 +63,8 @@ var
 begin
   Result:= TStringList.Create;
 
-  if FClass = nil then
-  begin
-    Result.Add('Classe não encontrada');
+  if not ValidaClasse(FClass, Result) then
     Exit;
-  end;
 
   RttiContext := TRttiContext.Create;
   try
@@ -75,6 +79,14 @@ begin
   end;
 end;
 
+function TListaPropMet.ValidaClasse(const pClasse: TClass;
+  var pResultado: TStringList): boolean;
+begin
+  Result := pClasse <> nil;
+  if not Result then
+    pResultado.Add(sClasseNaoEncontrada);
+end;
+
 function TListaPropMet.ListaMetodos: TStringList;
 var
   RttiContext: TRttiContext;
@@ -83,11 +95,8 @@ var
 begin
   Result:= TStringList.Create;
 
-  if FClass = nil then
-  begin
-    Result.Add('Classe não encontrada');
+  if not ValidaClasse(FClass, Result) then
     Exit;
-  end;
 
   RttiContext := TRttiContext.Create;
   try
