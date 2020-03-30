@@ -40,41 +40,39 @@ end;
 procedure TMerge_Sort.Ordenar(var aListaEsquerda, aListaDireita, aListaSaida: TArray<Integer>);
 var
   nPosicao: integer;
-  nEsquerda: integer;
-  nDireita: integer;
+  nPosicaoSaida: integer;
 begin
-  nPosicao := ZeroValue;
-  nEsquerda := ZeroValue;
-  nDireita := ZeroValue;
+  nPosicaoSaida := ZeroValue;
 
-  while (Length(aListaEsquerda) <> nEsquerda) and (Length(aListaDireita) <> nDireita) do
+  while (Length(aListaEsquerda) > ZeroValue) and (Length(aListaDireita) > ZeroValue) do
   begin
-    if (aListaEsquerda[nEsquerda] <= aListaDireita[nDireita]) then
+    if aListaEsquerda[ZeroValue] <= aListaDireita[ZeroValue] then
     begin
-      aListaSaida[nPosicao] := aListaEsquerda[nEsquerda];
-      Inc(nEsquerda);
+      aListaSaida[nPosicaoSaida] := aListaEsquerda[ZeroValue];
+      Inc(nPosicaoSaida);
+      for nPosicao := Low(aListaEsquerda) to Pred(High(aListaEsquerda)) do
+        aListaEsquerda[nPosicao] := aListaEsquerda[Succ(nPosicao)];
+      SetLength(aListaEsquerda, Pred(Length(aListaEsquerda)));
     end
     else
     begin
-      aListaSaida[nPosicao] := aListaDireita[nDireita];
-      Inc(nDireita);
+      aListaSaida[nPosicaoSaida] := aListaDireita[ZeroValue];
+      Inc(nPosicaoSaida);
+      for nPosicao := Low(aListaDireita) to Pred(High(aListaDireita)) do
+        aListaDireita[nPosicao] := aListaDireita[Succ(nPosicao)];
+      SetLength(aListaDireita, Pred(Length(aListaDireita)));
     end;
-    Inc(nPosicao);
   end;
 
-  while (Length(aListaEsquerda) <> nEsquerda) do
-  begin
-    aListaSaida[nPosicao] := aListaEsquerda[nEsquerda];
-    Inc(nEsquerda);
-    Inc(nPosicao);
-  end;
+  if Length(aListaEsquerda) > ZeroValue then
+    for nPosicao := Low(aListaEsquerda) to High(aListaEsquerda) do
+      aListaSaida[nPosicaoSaida + nPosicao] := aListaEsquerda[nPosicao];
 
-  while (Length(aListaDireita) <> nDireita) do
-  begin
-    aListaSaida[nPosicao] := aListaDireita[nDireita];
-    Inc(nDireita);
-    Inc(nPosicao);
-  end;
+  nPosicaoSaida := nPosicaoSaida + Length(aListaEsquerda);
+
+  if Length(aListaDireita) > ZeroValue then
+    for nPosicao := Low(aListaDireita) to High(aListaDireita) do
+      aListaSaida[nPosicaoSaida + nPosicao] := aListaDireita[nPosicao];
 end;
 
 function TMerge_Sort.MergeSort_Internal(const pLista: TArray<Integer>): TArray<Integer>;

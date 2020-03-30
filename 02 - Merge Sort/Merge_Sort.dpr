@@ -23,6 +23,8 @@ var
   oMerge_Sort: TMerge_Sort;
 
 begin
+  ReportMemoryLeaksOnShutdown := True;
+
   repeat
     write('Informe uma lista de números inteiros separados por vírgula(,): ');
     readln(sListaEntrada);
